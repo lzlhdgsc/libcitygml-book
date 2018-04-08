@@ -21,4 +21,31 @@ Appearance::inTheme(const std::string& themeName) 返回是否主题名称在模
 Appearance::addToTheme(std::string themeName) 将主题加入模型中
 Appearance::getThemes()  返回模型主题
 AppearanceManager::getAppearanceByID(const std::string& id) 找到与Id相符合的外观
-
+AppearanceManager::getAllThemes() 返回vector类型的模型主题
+AppearanceManager::addAppearanceTarget(AppearanceTarget* target)增添目标外观
+AppearanceManager::addAppearance(std::shared_ptr<Appearance> appearance) 
+增添外观
+AppearanceManager::addTextureTargetDefinition(std::shared_ptr<TextureTargetDefinition> targetDef)增添文本目标定义
+AppearanceManager::addMaterialTargetDefinition(std::shared_ptr<MaterialTargetDefinition> targetDef)增添材料目标定义
+void assignTargetDefinition(std::shared_ptr<T>& targetDef, const std::unordered_map<std::string, AppearanceTarget*>& targetMap, std::shared_ptr<CityGMLLogger>& logger) 模板类，根据目标定义确认ID，并判断该ID在目标树中是否存在
+AppearanceManager::assignAppearancesToTargets()调用上述模板类，将外观的材料和文字的定义加入到目标树中
+AppearanceManager::addThemesFrom(std::shared_ptr<Appearance> surfaceData)从外表数据中增添主题
+AppearanceTarget::addTargetDefinition(std::shared_ptr<AppearanceTargetDefinition<Appearance> > targetDef) 将目标中的材料或文本的定义加入到模型中
+ AppearanceTarget::addTargetDefinition(std::shared_ptr<TextureTargetDefinition> targetDef)将目标中的文本的定义加入到模型中
+void AppearanceTarget::addTargetDefinition(std::shared_ptr<MaterialTargetDefinition> targetDef)
+将目标中的材料的定义加入到模型中
+AppearanceTarget::addTargetDefinitionsOf(const AppearanceTarget& other) 将整个传入的目标前后对应加入模型中
+<MaterialTargetDefinition>  AppearanceTarget::getMaterialTargetDefinitionForTheme(const std::string& theme, bool front) 找到前或后端模型主材料的主题定义
+<const MaterialTargetDefinition> AppearanceTarget::getMaterialTargetDefinitionForTheme(const std::string& theme, bool front) 找到前或后端模型主材料的主题定义
+<TextureTargetDefinition> AppearanceTarget::getTextureTargetDefinitionForTheme(const std::string& theme, bool front) 找到前或后端模型主文本的主题定义
+<const TextureTargetDefinition> AppearanceTarget::getTextureTargetDefinitionForTheme(const std::string& theme, bool front) 找到前或后端模型主文本的主题定义
+AppearanceTarget::getTextureTargetDefinitions()将传入的模型前后文本对应加入目标中
+AppearanceTarget::getAllTextureThemes(bool front)返回模型前端或者后端所有的主题
+AttributeValue::AttributeValue(...) 初始函数，可设置模型的初始值和初始类型
+void AttributeValue::setType(AttributeType type)设置模型的类型
+AttributeValue::getType() 返回模型类型
+void AttributeValue::setValue(...) 设置模型值，根据值类型选择对应执行的函数
+AttributeValue::asString() 返回模型的值，以字符串形式
+AttributeValue::asDouble(double defaultValue) 返回模型的值，以双精度数形式
+AttributeValue::asInteger(int defaultValue) 返回模型的值，以整数形式
+operator<<(std::ostream& os, const AttributeValue& o) 返回模型的值的数据流
