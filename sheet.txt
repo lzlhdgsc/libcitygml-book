@@ -1,0 +1,24 @@
+Address::country()  返回国家
+Address::setCountry  设置国家
+Address::locality()  返回坐标
+Address::setLocality 设置坐标
+Address::postalCode() 返回邮政编码
+Address::setPostalCode 设置邮政编码
+Address::thoroughfareName() 通道名
+Address::setThoroughfareName 设置通道名
+Address::thoroughfareNumber() 返回通道
+Address::setThoroughfareNumber() 设置通道数量
+Appearance::getType() 返回外观的类型
+Appearance::getIsFront() 返回外观是否为前端
+Appearance::toString() 返回外观类型和ID
+<Material> Appearance::asMaterial()  返回空指针
+<const Material> Appearance::asMaterial() 返回空指针
+<Texture> Appearance::asTexture 返回空指针
+<const Texture> Appearance::asTexture() 返回空指针
+<GeoreferencedTexture> Appearance::asGeoreferencedTexture() 返回空指针
+<const GeoreferencedTexture> Appearance::asGeoreferencedTexture()  返回空指针
+Appearance::inTheme(const std::string& themeName) 返回是否主题名称在模型中出现
+Appearance::addToTheme(std::string themeName) 将主题加入模型中
+Appearance::getThemes()  返回模型主题
+AppearanceManager::getAppearanceByID(const std::string& id) 找到与Id相符合的外观
+
