@@ -49,3 +49,45 @@ AttributeValue::asString() 返回模型的值，以字符串形式
 AttributeValue::asDouble(double defaultValue) 返回模型的值，以双精度数形式
 AttributeValue::asInteger(int defaultValue) 返回模型的值，以整数形式
 operator<<(std::ostream& os, const AttributeValue& o) 返回模型的值的数据流
+CityGMLFactory::createCityModel(const std::string& id) 新建城市模型，并返回城市模型ID
+CityGMLFactory::createCityObject(const std::string& id, CityObject::CityObjectsType type) 新建城市模型 并返回CityObject指针
+Geometry::GeometryType mapCityObjectsTypeToGeometryType(const CityObject::CityObjectsType& cityObjType) 根据类型参数返回对应类型的对象
+CityGMLFactory::createGeometry(const std::string& id, const CityObject::CityObjectsType& cityObjType, unsigned int lod) 创建新的地理对象
+CityGMLFactory::createPolygon(const std::string& id) 在模型内新建多面体，返回该多面体的指针
+CityGMLFactory::createLineString(const std::string& id) 创建新的行字符串并返回其指针
+CityGMLFactory::requestSharedPolygonForGeometry(Geometry* geom, const std::string& polygonId) 执行该对象对应的request函数
+CityGMLFactory::shareGeometry(Geometry* geom) 将该指针内容加入到该模型中并返回模型内的地理指针
+CityGMLFactory::requestSharedGeometryWithID(ImplicitGeometry* implicitGeom, const std::string& id)执行该对象对应的request函数 
+CityGMLFactory::createTexture(const std::string& id) 根据id对应的字符串创建文本属性并将其加入模型中
+CityGMLFactory::createMaterial(const std::string& id) 根据id对应的字符串创建材料属性并将其加入模型中
+CityGMLFactory::createGeoReferencedTexture(const std::string& id) 根据id对应的字符串创建地理参考属性并将其加入模型中
+CityGMLFactory::createMaterialTargetDefinition(const std::string& targetID, std::shared_ptr<Material> appearance, const std::string& id) 根据id对应的字符串创建目标材料属性并将其加入模型中
+CityGMLFactory::getAppearanceWithID(const std::string& id) 根据ID返回外观
+CityGMLFactory::getAllThemes() 返回模型所有主题
+CityGMLFactory::closeFactory() 结束模型的操作
+CityGMLFactory::appearanceTargetCreated(AppearanceTarget* obj) 根据目标外观将其加入模型
+CityModel::addToCityObjectsMapRecursive(const CityObject* cityObj) 将某个模型对象整体加入另一个模型
+CityModel::themes() 返回模型主题
+CityModel::setThemes(std::vector<std::string> themes) 根据参数设置模型主题
+CityModel::getAllCityObjectsOfType( CityObject::CityObjectsType type ） 根据类型返回所有该类型的对象
+CityModel::getRootCityObjects() 返回所有的根对象
+CityModel::addRootObject(CityObject* obj) 添加根对象
+CityModel::getNumRootCityObjects() 返回根对象的数目
+CityModel::getRootCityObject(int i) 返回第i-1个根对象
+CityModel::finish(Tesselator& tesselator, bool optimize, std::shared_ptr<CityGMLLogger> logger) 将修改结果写入模型，完成修改操作
+std::ostream& operator<<( std::ostream& out, const CityModel& model ) 打印根对象
+CityObject::CityObjectsType CityObject::getType() 返回模型类型
+CityObject::getTypeAsString() 将模型类型转换为字符串后返回
+CityObject::getGeometriesCount() 返回地理数目
+CityObject::getGeometry(unsigned int i) 返回第i-1个地理对象
+CityObject::addGeometry(Geometry* geom) 增添地理对象
+CityObject::getImplicitGeometryCount() 返回模糊地理数目
+CityObject::getImplicitGeometry(unsigned int i) 回第i-1个模糊地理对象
+CityObject::addImplictGeometry(ImplicitGeometry* implictGeom) 增添模糊地理对象
+CityObject::getChildCityObjectsCount() 返回子对象数目
+CityObject::getChildCityObject(unsigned int i) 返回第i-1个子对象
+CityObject::addChildCityObject(CityObject* cityObj) 增添子对象
+Address* CityObject::address() 返回模型地址
+CityObject::setAddress(std::unique_ptr<Address>&& address) 设置模型地址
+CityObject::finish(Tesselator& tesselator, bool optimize, std::shared_ptr<CityGMLLogger> logger) 完成操作
+operator<<( std::ostream& os, const CityObject& o ) 打印模型的包络和属性
