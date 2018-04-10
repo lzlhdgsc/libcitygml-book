@@ -52,7 +52,7 @@ operator<<(std::ostream& os, const AttributeValue& o) 返回模型的值的数�
 CityGMLFactory::createCityModel(const std::string& id) 新建城市模型，并返回城市模型ID
 CityGMLFactory::createCityObject(const std::string& id, CityObject::CityObjectsType type) 新建城市模型 并返回CityObject指针
 Geometry::GeometryType mapCityObjectsTypeToGeometryType(const CityObject::CityObjectsType& cityObjType) 根据类型参数返回对应类型的对象
-CityGMLFactory::createGeometry(const std::string& id, const CityObject::CityObjectsType& cityObjType, unsigned int lod) 创建新的地理对象
+CityGMLFactory::createGeometry(const std::string& id, const CityObject::CityObjectsType& cityObjType, unsigned int lod) 创建新的几何对象
 CityGMLFactory::createPolygon(const std::string& id) 在模型内新建多面体，返回该多面体的指针
 CityGMLFactory::createLineString(const std::string& id) 创建新的行字符串并返回其指针
 CityGMLFactory::requestSharedPolygonForGeometry(Geometry* geom, const std::string& polygonId) 执行该对象对应的request函数
@@ -60,7 +60,7 @@ CityGMLFactory::shareGeometry(Geometry* geom) 将该指针内容加入到该模�
 CityGMLFactory::requestSharedGeometryWithID(ImplicitGeometry* implicitGeom, const std::string& id)执行该对象对应的request函数 
 CityGMLFactory::createTexture(const std::string& id) 根据id对应的字符串创建文本属性并将其加入模型中
 CityGMLFactory::createMaterial(const std::string& id) 根据id对应的字符串创建材料属性并将其加入模型中
-CityGMLFactory::createGeoReferencedTexture(const std::string& id) 根据id对应的字符串创建地理参考属性并将其加入模型中
+CityGMLFactory::createGeoReferencedTexture(const std::string& id) 根据id对应的字符串创建几何参考属性并将其加入模型中
 CityGMLFactory::createMaterialTargetDefinition(const std::string& targetID, std::shared_ptr<Material> appearance, const std::string& id) 根据id对应的字符串创建目标材料属性并将其加入模型中
 CityGMLFactory::getAppearanceWithID(const std::string& id) 根据ID返回外观
 CityGMLFactory::getAllThemes() 返回模型所有主题
@@ -78,12 +78,12 @@ CityModel::finish(Tesselator& tesselator, bool optimize, std::shared_ptr<CityGML
 std::ostream& operator<<( std::ostream& out, const CityModel& model ) 打印根对象
 CityObject::CityObjectsType CityObject::getType() 返回模型类型
 CityObject::getTypeAsString() 将模型类型转换为字符串后返回
-CityObject::getGeometriesCount() 返回地理数目
-CityObject::getGeometry(unsigned int i) 返回第i-1个地理对象
-CityObject::addGeometry(Geometry* geom) 增添地理对象
-CityObject::getImplicitGeometryCount() 返回模糊地理数目
-CityObject::getImplicitGeometry(unsigned int i) 回第i-1个模糊地理对象
-CityObject::addImplictGeometry(ImplicitGeometry* implictGeom) 增添模糊地理对象
+CityObject::getGeometriesCount() 返回几何数目
+CityObject::getGeometry(unsigned int i) 返回第i-1个几何对象
+CityObject::addGeometry(Geometry* geom) 增添几何对象
+CityObject::getImplicitGeometryCount() 返回模糊几何数目
+CityObject::getImplicitGeometry(unsigned int i) 回第i-1个模糊几何对象
+CityObject::addImplictGeometry(ImplicitGeometry* implictGeom) 增添模糊几何对象
 CityObject::getChildCityObjectsCount() 返回子对象数目
 CityObject::getChildCityObject(unsigned int i) 返回第i-1个子对象
 CityObject::addChildCityObject(CityObject* cityObj) 增添子对象
@@ -91,3 +91,31 @@ Address* CityObject::address() 返回模型地址
 CityObject::setAddress(std::unique_ptr<Address>&& address) 设置模型地址
 CityObject::finish(Tesselator& tesselator, bool optimize, std::shared_ptr<CityGMLLogger> logger) 完成操作
 operator<<( std::ostream& os, const CityObject& o ) 打印模型的包络和属性
+Envelope::Envelope(）新建包络类并确定上下界
+Envelope::Envelope(const std::string& srsName) 设置包络的名称
+TVec3d& Envelope::getLowerBound() const 获得包络的下边界
+Envelope::setLowerBound(const TVec3d& coordinate) 设置包络的下边界
+Vec3d& Envelope::getUpperBound() 获得包络的上边界
+Envelope::setUpperBound(const TVec3d& coordinate) 设置包络的上边界
+Envelope::srsName()  返回名称
+Envelope::validBounds()  判断包络是否合法
+operator<<( std::ostream& os, const Envelope& e ) 打印包络边界
+eatureObject::FeatureObject(const std::string& gmlID) 设置相应包络
+FeatureObject::getEnvelope() 返回功能对象的包络
+FeatureObject::setEnvelope(Envelope* e) 设置模型的包络
+Geometry::getLOD() 返回模型的多层次细节
+Geometry::getPolygonsCount() 返回多面体数量
+Geometry::getPolygon(unsigned int i) 返回第i-1个多面体
+Geometry::getLineStringCount() 返回行字符串数
+Geometry::getLineString(unsigned int i) 返回第i-1个行字符串数
+Geometry::getGeometriesCount() 返回几何数量
+Geometry::getGeometry(unsigned int i) 返回第i-1个几何属性
+Geometry::addGeometry(Geometry* geom) 增添几何对象
+Geometry::getType() 返回模型类型
+Geometry::getTypeAsString() 返回字符串类模型类型
+Geometry::lod() 返回模型的多层次细节
+Geometry::setLod(unsigned int lod) 设置模型的多层次细节
+Geometry::addPolygon( std::shared_ptr<Polygon> p ) 将多面体加入到模型中
+Geometry::addLineString(std::shared_ptr<LineString> l) 将行字符串加入到模型中
+Geometry::finish(Tesselator& tesselator, bool optimize, std::shared_ptr<CityGMLLogger> logger) 完成操作
+operator<<( std::ostream& os, const citygml::Geometry& s ) 打印模型的多面体
