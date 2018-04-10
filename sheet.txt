@@ -189,3 +189,41 @@ Polygon::createIndicesWithTesselation(Tesselator& tesselator, std::shared_ptr<Ci
 Polygon::computeIndices(Tesselator& tesselator, std::shared_ptr<CityGMLLogger> logger ) 计算目录，判断多面体是否少于3个
 Polygon::finish(Tesselator& tesselator, bool optimize, std::shared_ptr<CityGMLLogger> logger) 完成修改
 Polygon::addRing( LinearRing* ring )  增加闭环
+PolygonManager::addPolygon(std::shared_ptr<Polygon> poly) 添加多面体
+PolygonManager::requestSharedPolygonForGeometry(Geometry* geom, const std::string& polygonID) 请求列表中添加该多面体
+PolygonManager::finish() 完成修改
+Tesselator::Tesselator(std::shared_ptr<citygml::CityGMLLogger> logger ) 创建镶嵌对象
+Tesselator::init( const TVec3d& normal, GLenum winding_rule ) 镶嵌对象初始化
+Tesselator::compute() 计算镶嵌关系
+Tesselator::getVertices() 返回所有坐标
+Tesselator::getIndices() 得到所有目录
+Tesselator::setKeepVertices(bool value) 设置是否保留坐标
+Tesselator::keepVertices() 返回是否保留坐标
+Tesselator::addContour(const std::vector<TVec3d>& pts, std::vector<std::vector<TVec2f> > textureCoordinatesLists ) 根据参数增添轮廓属性并更新纹理坐标
+Tesselator::beginCallback( GLenum which, void* userData ) 对用户数据初始回调
+Tesselator::vertexDataCallback( GLvoid *data, void* userData ) 坐标数据回调
+Tesselator::combineCallback( GLdouble coords[3], void* vertex_data[4], GLfloat weight[4], void** outData, void* userData ) 回调全部，包括坐标和目录
+Tesselator::endCallback( void* userData ) 最终回调，完成修改
+CALLBACK Tesselator::errorCallback( GLenum errorCode, void* userData ) 用于报错
+Texture::getUrl()  返回纹理的资源定位符
+Texture::setUrl(const std::string& url) 设置纹理的资源定位符
+Texture::getRepeat() 返回纹理是否重复
+Texture::getWrapMode() 返回纹理的围绕形式
+Texture::setWrapMode(Texture::WrapMode mode) 设置纹理的围绕形式
+Texture::setWrapModeFromString(std::string wrapMode) 根据字符串设置纹理的围绕形式
+exture::getBorderColor() 返回纹理的边框颜色
+Texture::setBorderColor(TVec4f color) 设置纹理的边框颜色
+Texture::toString() 打印资源定位符
+Texture::asTexture()  返回纹理对象的自身指针
+TextureCoordinates::targets(const LinearRing& ring) 返回闭环内是否有目标
+TextureCoordinates::eraseCoordinate(unsigned int i) 删除第i-1个纹理坐标
+std::vector<TVec2f>& TextureCoordinates::getCoords() 返回纹理的坐标列表
+TextureCoordinates::setCoords(std::vector<TVec2f> texCoords) 设置纹理的坐标
+TextureTargetDefinition::getTextureCoordinatesCount() 返回目标纹理的数目
+TextureTargetDefinition::getTextureCoordinates(unsigned int i) 返回第i-1个目标纹理
+TextureTargetDefinition::getTextureCoordinatesForID(const std::string& ringID) 返回对应闭环内的目标纹理
+TextureTargetDefinition::addTexCoordinates(std::shared_ptr<TextureCoordinates> texCoords) 增加目标纹理的坐标
+TransformationMatrix::TransformationMatrix() 矩阵初始化，4*4
+TransformationMatrix(double* matrix) 根据参数设置矩阵
+TransformationMatrix::getMatrix() 返回矩阵
+TransformationMatrix::getTransposedMatrix() 返回转置矩阵
