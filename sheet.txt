@@ -25,21 +25,21 @@ AppearanceManager::getAllThemes() 返回vector类型的模型主题
 AppearanceManager::addAppearanceTarget(AppearanceTarget* target)增添目标外观
 AppearanceManager::addAppearance(std::shared_ptr<Appearance> appearance) 
 增添外观
-AppearanceManager::addTextureTargetDefinition(std::shared_ptr<TextureTargetDefinition> targetDef)增添文本目标定义
+AppearanceManager::addTextureTargetDefinition(std::shared_ptr<TextureTargetDefinition> targetDef)增添纹理目标定义
 AppearanceManager::addMaterialTargetDefinition(std::shared_ptr<MaterialTargetDefinition> targetDef)增添材料目标定义
 void assignTargetDefinition(std::shared_ptr<T>& targetDef, const std::unordered_map<std::string, AppearanceTarget*>& targetMap, std::shared_ptr<CityGMLLogger>& logger) 模板类，根据目标定义确认ID，并判断该ID在目标树中是否存在
 AppearanceManager::assignAppearancesToTargets()调用上述模板类，将外观的材料和文字的定义加入到目标树中
 AppearanceManager::addThemesFrom(std::shared_ptr<Appearance> surfaceData)从外表数据中增添主题
-AppearanceTarget::addTargetDefinition(std::shared_ptr<AppearanceTargetDefinition<Appearance> > targetDef) 将目标中的材料或文本的定义加入到模型中
- AppearanceTarget::addTargetDefinition(std::shared_ptr<TextureTargetDefinition> targetDef)将目标中的文本的定义加入到模型中
+AppearanceTarget::addTargetDefinition(std::shared_ptr<AppearanceTargetDefinition<Appearance> > targetDef) 将目标中的材料或纹理的定义加入到模型中
+ AppearanceTarget::addTargetDefinition(std::shared_ptr<TextureTargetDefinition> targetDef)将目标中的纹理的定义加入到模型中
 void AppearanceTarget::addTargetDefinition(std::shared_ptr<MaterialTargetDefinition> targetDef)
 将目标中的材料的定义加入到模型中
 AppearanceTarget::addTargetDefinitionsOf(const AppearanceTarget& other) 将整个传入的目标前后对应加入模型中
 <MaterialTargetDefinition>  AppearanceTarget::getMaterialTargetDefinitionForTheme(const std::string& theme, bool front) 找到前或后端模型主材料的主题定义
 <const MaterialTargetDefinition> AppearanceTarget::getMaterialTargetDefinitionForTheme(const std::string& theme, bool front) 找到前或后端模型主材料的主题定义
-<TextureTargetDefinition> AppearanceTarget::getTextureTargetDefinitionForTheme(const std::string& theme, bool front) 找到前或后端模型主文本的主题定义
-<const TextureTargetDefinition> AppearanceTarget::getTextureTargetDefinitionForTheme(const std::string& theme, bool front) 找到前或后端模型主文本的主题定义
-AppearanceTarget::getTextureTargetDefinitions()将传入的模型前后文本对应加入目标中
+<TextureTargetDefinition> AppearanceTarget::getTextureTargetDefinitionForTheme(const std::string& theme, bool front) 找到前或后端模型主纹理的主题定义
+<const TextureTargetDefinition> AppearanceTarget::getTextureTargetDefinitionForTheme(const std::string& theme, bool front) 找到前或后端模型主纹理的主题定义
+AppearanceTarget::getTextureTargetDefinitions()将传入的模型前后纹理对应加入目标中
 AppearanceTarget::getAllTextureThemes(bool front)返回模型前端或者后端所有的主题
 AttributeValue::AttributeValue(...) 初始函数，可设置模型的初始值和初始类型
 void AttributeValue::setType(AttributeType type)设置模型的类型
@@ -119,3 +119,73 @@ Geometry::addPolygon( std::shared_ptr<Polygon> p ) 将多面体加入到模型�
 Geometry::addLineString(std::shared_ptr<LineString> l) 将行字符串加入到模型中
 Geometry::finish(Tesselator& tesselator, bool optimize, std::shared_ptr<CityGMLLogger> logger) 完成操作
 operator<<( std::ostream& os, const citygml::Geometry& s ) 打印模型的多面体
+GeometryManager::GeometryManager(std::shared_ptr<CityGMLLogger> logger) 设置标签
+GeometryManager::addSharedGeometry(std::shared_ptr<Geometry> geom) 增添新的共享几何
+GeometryManager::requestSharedGeometryForImplicitGeometry(ImplicitGeometry* geom, const std::string& geometryID) 增添新的模糊几何
+GeometryManager::finish() 完成操作并清空部分资源
+GeoreferencedTexture::getPreferWorldFile() 返回是否采用参考值
+GeoreferencedTexture::setPreferWorldFile(bool value) 设置是否采用参考值
+GeoreferencedTexture::asTexture() 返回共享指针
+GeoreferencedTexture::asGeoreferencedTexture 返回共享指针
+ImplicitGeometry::setTransformMatrix(const TransformationMatrix matrix) 设置模型的矩阵
+TransformationMatrix& ImplicitGeometry::getTransformMatrix() 返回模型的矩阵
+ImplicitGeometry::setReferencePoint(const TVec3d& referencePoint) 设置模型的参考点
+ImplicitGeometry::getReferencePoint() 返回模型的参考点
+ImplicitGeometry::addGeometry(std::shared_ptr<Geometry> geom) 增添模型的几何对象
+ImplicitGeometry::getGeometriesCount()  返回模型的几何对象数目
+ImplicitGeometry::getGeometry(unsigned int i) 返回模型的第i-1个几何对象
+ImplicitGeometry::getSRSName() 返回模型的名称
+ImplicitGeometry::setSRSName 设置模型的名称
+LinearRing::isExterior() 返回是否为外景
+LinearRing::size(） 返回模型的顶点数量
+LinearRing::addVertex(const TVec3d& v) 增添模型的顶点
+LinearRing::computeNormal() 顶点正规化处理
+LinearRing::getVertices 返回模型顶点
+LinearRing::setVertices(std::vector<TVec3d> vertices) 设置模型的顶点
+LinearRing::removeDuplicateVertices(const std::vector<TextureTargetDefinition*>& targets, std::shared_ptr<CityGMLLogger> logger )  移除多余的顶点并打印不匹配的顶点
+LinearRing::forgetVertices() 清除顶点
+citygml::LineString::LineString(const std::string& id)  创建行字符串对象，模型维度减一
+citygml::LineString::getDimensions() 返回模型的维度
+citygml::LineString::getVertices2D() 返回模型的2维顶点
+citygml::LineString::getVertices3D() 返回模型的三维顶点
+citygml::LineString::setVertices2D 设置模型的2维顶点
+citygml::LineString::setVertices3D 设置模型的3维顶点
+citygml::LineString::setDimension 设置模型维度
+Material::Material(const std::string& id) : Appearance( id, "Material" ) 初始化材料对象，并设置默认值
+Material::isSmooth() 材料是否光滑
+Material::setIsSmooth(bool isSmooth) 设置材料是否光滑
+Material::getDiffuse() 得到散射度
+Material::setDiffuse(TVec3f diffuse) 设置散射度
+Material::getEmissive() 得到发光度
+aterial::setEmissive(TVec3f emissive) 设置材料的发光度
+aterial::getSpecular() 得到材料的高光度
+Material::setSpecular(TVec3f specular) 设置材料的高光度
+Material::getAmbientIntensity() 得到周围亮度
+Material::setAmbientIntensity(float intensity) 设置周围亮度
+Material::getShininess() 得到反射度
+Material::setShininess(float shininess) 设置反射度
+Material::getTransparency() 得到透明度
+Material::setTransparency(float transparancy) 设置透明度
+Material::asMaterial() 返回材料对象的指针
+Object::Object(const std::string& id) : 根据ID创建对象
+std::string&Object::getId() 返回对象ID
+Object::getAttribute(const std::string& name) 根据参数返回属性
+Object::getAttributes()  返回对象的属性
+Object::setAttribute(const std::string& name, const std::string& value, AttributeType type, bool overwrite) 根据参数设置指定属性
+operator<<( std::ostream& os, const Object& o ) 打印对象ID
+Polygon::Polygon(const std::string& id, std::shared_ptr<CityGMLLogger> logger)  创建多面体对象
+std::vector<TVec3d>& Polygon::getVertices() 返回多面体定点
+Polygon::getIndices() 返回多面体目录
+Polygon::getMaterialFor(const std::string& theme, bool front)  根据主题和是否前后端货的目标的材料外观
+Polygon::getTextureFor(const std::string& theme, bool front)  根据主题和是否前后端货的目标的纹理
+Polygon::getTexCoordsForTheme(const std::string& theme, bool front)  根据主题和是否前后端货的目标的纹理坐标，没有的话打印错误
+Polygon::computeNormal() 正规化计算
+Polygon::negNormal() 返回是否正规化
+Polygon::setNegNormal(bool negNormal) 设置是否正规化
+Polygon::removeDuplicateVerticesInRings(std::shared_ptr<CityGMLLogger> logger) 在闭环内移除重复顶点
+Polygon::getTexCoordsForRingAndTheme(const LinearRing& ring, const std::string& theme, bool front)  查找对应闭环内的纹理坐标
+Polygon::getTexCoordListsForRing(const LinearRing& ring, const std::vector<std::string>& themesFront, const std::vector<std::string>& themesBack) 返回闭环内前端或后端的纹理坐标列表
+Polygon::createIndicesWithTesselation(Tesselator& tesselator, std::shared_ptr<CityGMLLogger> logger) 根据镶嵌关系创建目录
+Polygon::computeIndices(Tesselator& tesselator, std::shared_ptr<CityGMLLogger> logger ) 计算目录，判断多面体是否少于3个
+Polygon::finish(Tesselator& tesselator, bool optimize, std::shared_ptr<CityGMLLogger> logger) 完成修改
+Polygon::addRing( LinearRing* ring )  增加闭环
