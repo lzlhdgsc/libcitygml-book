@@ -1,0 +1,10 @@
+for ubuntu.16.04
+open the CMD
+//cd ./osgplugin
+// cmake . 
+// add the definition of the version of cmake
+//delete the part for detecting the version of openscenegraph
+// make 
+// make install 
+finally build osgviewer
+just enjoy it :)
