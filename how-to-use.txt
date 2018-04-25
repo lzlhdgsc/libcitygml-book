@@ -8,3 +8,6 @@ open the CMD
 // make install 
 finally build osgviewer
 just enjoy it :)
+
+Emmm，this code can't make use of LOD and it doesn't return class osg:LOD.
+If interested, cantact me please!
